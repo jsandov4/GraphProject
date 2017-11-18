@@ -6,8 +6,10 @@
 ## Usage
 
 ```js
-Example of how to use the graph and add nodes and Edges.
-Nodes has to be inside the graph before adding an Edge.
+Example of how to use the graph,  add nodes and Edges.
+Node require 2 values (x,y) which is the position on a 2D space.
+Nodes has to be inside the graph BEFORE adding an Edge.
+To add an edge you have to specify 2 nodes.
     let g = new Graph();
     let A = new Node(0, 1);
     let B = new Node(1, 1);
@@ -23,7 +25,7 @@ Nodes has to be inside the graph before adding an Edge.
     g.addEdge(B, D);
 
  Example of how to get the Weight of the graph once the nodes and edges has been inserted.
- 
+
  let weight = thetaFunction(g, A);  
  
  Where A is the Central Node.
