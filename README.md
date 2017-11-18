@@ -22,6 +22,12 @@ Nodes has to be inside the graph before adding an Edge.
     g.addEdge(B, C);
     g.addEdge(B, D);
 
+ Example of how to get the Weight of the graph once the nodes and edges has been inserted.
+ 
+ let weight = thetaFunction(g, A);  
+ 
+ Where A is the Central Node.
+
 ```
 ## License
 
