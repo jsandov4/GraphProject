@@ -8,11 +8,11 @@
 ```js
 Example of how to use the graph and add nodes and Edges.
 Nodes has to be inside the graph before adding an Edge.
-    var g = new Graph();
-    var A = new Node(0, 1);
-    var B = new Node(1, 1);
-    var C = new Node(1, 0);
-    var D = new Node(3, 1);
+    let g = new Graph();
+    let A = new Node(0, 1);
+    let B = new Node(1, 1);
+    let C = new Node(1, 0);
+    let D = new Node(3, 1);
     g.addNode(A);
     g.addNode(B);
     g.addNode(C);
