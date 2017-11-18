@@ -1,18 +1,27 @@
 # graph-project [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > First part
 
-## Installation
 
-```sh
-$ npm install --save graph-project
-```
 
 ## Usage
 
 ```js
-const graphProject = require('graph-project');
+Example of how to use the graph and add nodes and Edges.
+Nodes has to be inside the graph before adding an Edge.
+    var g = new Graph();
+    var A = new Node(0, 1);
+    var B = new Node(1, 1);
+    var C = new Node(1, 0);
+    var D = new Node(3, 1);
+    g.addNode(A);
+    g.addNode(B);
+    g.addNode(C);
+    g.addNode(D);
 
-graphProject('Rainbow');
+    g.addEdge(A, B);
+    g.addEdge(B, C);
+    g.addEdge(B, D);
+
 ```
 ## License
 
