@@ -82,24 +82,34 @@ async function run(){
   initializeGraph(grafo);
   showGraph(grafo);
   var a =0;
-  temp = 1.0;
+  let temp = 10.0;
+  console.log(isConected(grafo));
+  var isize = grafo.length;
+  var grafo0 = copyGraph(grafo);
 
-
-  while(a<1){
-    let grafo2 = proposeGraph(grafo);  
-    //prob = probTransition(grafo, grafo2, temp);
+  while(a<2000){
+    let grafo2 = proposeGraph(grafo0);  
+    let prob = probTransition(grafo0, grafo2, temp);
     //let boo = acceptance(prob);  
     //if(boo){
     //    grafo = grafo2;
     //}
-    await pause(100);
+    await pause(10);
     clearScreen(); 
-    showGraph(grafo2);
+    //showGraph(proposeGraph(grafo));
  
-    console.log(isConected(grafo2));
+ 
+     console.log(prob);
+ 
+    // console.log(isConected(grafo2));
       
       a++
+      
+      showGraph(grafo2);
+      delete grafo0;
+    grafo0 = copyGraph(grafo2);
   }
+  console.log(isConected(grafo));
   
 }
 
