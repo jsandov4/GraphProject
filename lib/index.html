@@ -1,13 +1,121 @@
 <html>
 <head>
 <script src='index.js'></script> 
-<script src='vis.js'></script>    
+
+<script>
+    function showNode(node, color = '#2ecc71') {
+  var canvas = document.getElementById('screen');
+  var context = canvas.getContext('2d');
+  let x = node.x;
+  let y = node.y;
+  context.beginPath();
+  context.arc(x, y, 10, 0, 2 * Math.PI, false);
+  context.fillStyle = color;
+  context.fill();
+}
+
+function showEdge(edge, color = '#2c3e50') {
+  let node1 = edge.origin;
+  let node2 = edge.destiny;
+  let x1 = node1.x;
+  let y1 = node1.y;
+  let x2 = node2.x;
+  let y2 = node2.y;
+  var canvas = document.getElementById('screen');
+  var context = canvas.getContext('2d');
+  context.beginPath();
+  context.moveTo(x1, y1);
+  context.lineTo(x2, y2);
+  context.strokeStyle = color;
+  context.lineWidth = 1.0;
+  context.stroke();
+}
+
+function showGraph(grafo) {
+  var nodes = grafo.nodes;
+
+  for (var i = 0; i < nodes.length; i++) {
+    var nodet = nodes[i];
+
+    showNode(nodet);
+    if (i === 0) {
+      showNode(nodet, '#e74c3c');
+    }
+    for (let j = 0; j < nodet.edges.length; j++) {
+      showEdge(nodet.edges[j]);
+    }
+  }
+}
+
+function clearScreen() {
+  var canvas = document.getElementById('screen');
+  var context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+
+</script>
+<script>
+    var grafo = new Graph();
+    var available = true;
+    var firstN = true;
+function drawPoint(event){
+    var canvas = document.getElementById('screen');
+    var pos = canvas.getBoundingClientRect()
+    var posX = event.clientX - pos.left;
+    var posY = event.clientY - pos.top ;
+    let nody = new Node(posX,posY);
+    if(available){   
+    grafo.addNode(nody);
+    if(firstN){
+        showNode(nody,'#e74c3c');
+        firstN = false;
+    }else{
+        showNode(nody);
+    }
+
+    }
+}
+
+async function run(){
+  available = false;
+  initializeGraph(grafo);
+  showGraph(grafo);
+  var a =0;
+  temp = 1.0;
+
+
+  while(a<1){
+    let grafo2 = proposeGraph(grafo);  
+    //prob = probTransition(grafo, grafo2, temp);
+    //let boo = acceptance(prob);  
+    //if(boo){
+    //    grafo = grafo2;
+    //}
+    await pause(100);
+    clearScreen(); 
+    showGraph(grafo2);
+ 
+    console.log(isConected(grafo2));
+      
+      a++
+  }
+  
+}
+
+function pause(time){
+    return new Promise(resolve => setTimeout(resolve,time));
+}
+    
+    
+</script> 
 
 </head>    
 
 <body>
-<canvas width='600' height='480' id='screen'></canvas>
+<canvas width='600' height='480' id='screen' onclick="drawPoint(event)"></canvas>
 
+<button onclick= "run();">RUN</button>
 </body>
 
 </html>

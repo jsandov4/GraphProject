@@ -5,11 +5,12 @@
 
 ## Usage
 
-```js
+
 Example of how to use the graph,  add nodes and Edges.
 Node require 2 values (x,y) which is the position on a 2D space.
 Nodes has to be inside the graph BEFORE adding an Edge.
 To add an edge you have to specify 2 nodes.
+```js
     let g = new Graph();
     let A = new Node(0, 1);
     let B = new Node(1, 1);
@@ -23,6 +24,7 @@ To add an edge you have to specify 2 nodes.
     g.addEdge(A, B);
     g.addEdge(B, C);
     g.addEdge(B, D);
+```
 
  Example of how to get the Weight of the graph once the nodes and edges has been inserted.
 
@@ -30,7 +32,7 @@ To add an edge you have to specify 2 nodes.
  
  Where A is the Central Node.
 
-```
+
 ## License
 
 Apache-2.0 © [Juan S Sandoval](http://sas.rochester.edu/chm/groups/huo/juan-sebastian-sandoval/)
