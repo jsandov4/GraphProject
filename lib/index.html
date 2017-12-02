@@ -76,7 +76,7 @@ function drawPoint(event){
 
     }
 }
-
+var grafo0
 async function run(){
   available = false;
   initializeGraph(grafo);
@@ -85,29 +85,30 @@ async function run(){
   let temp = 10.0;
   console.log(isConected(grafo));
   var isize = grafo.length;
-  var grafo0 = copyGraph(grafo);
-
+  
+ grafo0 = grafo;
+  var grafo2 = null;
+  
   while(a<2000){
-    let grafo2 = proposeGraph(grafo0);  
-    let prob = probTransition(grafo0, grafo2, temp);
-    //let boo = acceptance(prob);  
-    //if(boo){
-    //    grafo = grafo2;
-    //}
-    await pause(10);
-    clearScreen(); 
-    //showGraph(proposeGraph(grafo));
- 
- 
-     console.log(prob);
- 
-    // console.log(isConected(grafo2));
-      
-      a++
-      
-      showGraph(grafo2);
-      delete grafo0;
-    grafo0 = copyGraph(grafo2);
+    let gtemp = proposeGraph(grafo0);  
+    // console.log('l');
+    let prob = probTransition(grafo0, gtemp, temp);
+
+    await pause(50);
+    clearScreen();
+    //grafo2 = gtemp;
+
+    if (acceptance(prob)){
+        grafo0 = gtemp;
+    }
+
+    showGraph(grafo0); 
+
+    //console.log(prob);  
+    //grafo0 = null;
+    //grafo0 = copyGraph(gtemp);
+    //gtemp = null;
+    a++ 
   }
   console.log(isConected(grafo));
   
