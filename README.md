@@ -2,22 +2,15 @@
 
 ## Using the program
 
-Click on the screen where you want to localize the node 0 (main node).
-This node will be colored in red to distinguish it form others nodes.
-
-Then continue adding nodes by clicking on the screen
-
-Set up the "temperature" and the number of steps that you want to employ
-to obtain a reasonable structure.
-
-Press "RUN" to see how the method proceeds to propouse a new strucure
+1) Click on the screen where you want to localize the node 0 (main node). This node will be colored in red to distinguish it from others nodes.
+2) Continue adding nodes by clicking on the screen.
+3) Set up the "temperature" and the number of steps that you want to employ to obtain a reasonable structure.
+4) Press "RUN" to see how the method proceeds to propose a new structure.
 
 
 ## Initial graph
 
-The initial condition for the graph is a complete connected graph, where each node is conncected
-to every other possible node.
-
+The initial condition for the graph is a complete connected graph, where each node is connected to every other possible node.
 
 
 
