@@ -6,15 +6,15 @@
 2) Continue adding nodes by clicking on the screen.
 3) Set up the "temperature" and the number of steps that you want to employ to obtain a reasonable structure.
 4) Press "RUN" to see how the method proceeds to propose a new structure.
-
+5) At the end of the steps, information is displayed.
 
 ## Initial graph
 
 The initial condition for the graph is a complete connected graph, where each node is connected to every other possible node.
 
 
+## Notes of how the objects are used (Node, Edge, Graph)
 
-The way that a node an
 Node require 2 values (x,y) which is the position on a 2D space.
 Nodes has to be inside the graph BEFORE adding an Edge.
 To add an edge you have to specify 2 nodes.
