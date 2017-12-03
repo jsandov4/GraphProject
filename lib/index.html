@@ -1,11 +1,26 @@
 <html>
 <head>
+       
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      
 <script src='index.js'></script> 
+<script> 
+function setTemp(){
+    temp = document.getElementsByName('temperatura')[0].value;
+    }
+    function setSteps(){
+    nsteps = document.getElementsByName('steps')[0].value;
+    }
+ </script> 
 
 <script>
-    function showNode(node, color = '#2ecc71') {
-  var canvas = document.getElementById('screen');
-  var context = canvas.getContext('2d');
+function showNode(node, color = '#2ecc71') {
+  var screen = document.getElementById('screen');
+  var context = screen.getContext('2d');
   let x = node.x;
   let y = node.y;
   context.beginPath();
@@ -21,8 +36,8 @@ function showEdge(edge, color = '#2c3e50') {
   let y1 = node1.y;
   let x2 = node2.x;
   let y2 = node2.y;
-  var canvas = document.getElementById('screen');
-  var context = canvas.getContext('2d');
+  var screen = document.getElementById('screen');
+  var context = screen.getContext('2d');
   context.beginPath();
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
@@ -31,15 +46,20 @@ function showEdge(edge, color = '#2c3e50') {
   context.stroke();
 }
 
-function showGraph(grafo) {
+function showGraph(grafo,boole) {
   var nodes = grafo.nodes;
 
   for (var i = 0; i < nodes.length; i++) {
     var nodet = nodes[i];
 
-    showNode(nodet);
+    if(!boole){
     if (i === 0) {
       showNode(nodet, '#e74c3c');
+    }else{
+        showNode(nodet);
+    }
+    }else{
+        showNode(nodet, '#2c3e50');
     }
     for (let j = 0; j < nodet.edges.length; j++) {
       showEdge(nodet.edges[j]);
@@ -48,27 +68,61 @@ function showGraph(grafo) {
 }
 
 function clearScreen() {
-  var canvas = document.getElementById('screen');
-  var context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  var screen = document.getElementById('screen');
+  var context = screen.getContext('2d');
+  context.clearRect(0, 0, screen.width, screen.height);
+  showGraph(gMargen,true); 
 }
 
+function totalEdgs(grafo){
+    let acum = 0;
+    for(let i = 0;i<grafo.nodes.length;i++){
+        acum += grafo.nodes[i].edges.length;
 
+    }
+return acum;
+}
+function writeData(data,info,inc){
+  var screen = document.getElementById('screen');
+  var context = screen.getContext("2d");
+  let val = ((info).toFixed(2));
+  context.font="20px Arial";
+  context.fillStyle = "red";
+  context.shadowBlur = 0;
+  context.fillText(data+""+val,30,30+inc);
+  
+}
+function writeIntro(inc){
+  var screen = document.getElementById('screen');
+  var context = screen.getContext("2d");
+  context.font="20px Arial";
+  context.fillStyle = "red";
+  context.shadowBlur = 0;
+  context.fillText("DRAW YOUR GRAPH HERE TO START !!" ,-50+inc,30+inc);
+  
+}
 </script>
 <script>
+  
     var grafo = new Graph();
+    var temp = 10.0;
+    var nsteps = 500;
+    //
+
     var available = true;
     var firstN = true;
 function drawPoint(event){
-    var canvas = document.getElementById('screen');
-    var pos = canvas.getBoundingClientRect()
+    var screen = document.getElementById('screen');
+    var pos = screen.getBoundingClientRect()
     var posX = event.clientX - pos.left;
     var posY = event.clientY - pos.top ;
     let nody = new Node(posX,posY);
     if(available){   
     grafo.addNode(nody);
     if(firstN){
+        clearScreen();
         showNode(nody,'#e74c3c');
+        //showGraph(gMargen,true);
         firstN = false;
     }else{
         showNode(nody);
@@ -76,41 +130,41 @@ function drawPoint(event){
 
     }
 }
-var grafo0
+
 async function run(){
   available = false;
   initializeGraph(grafo);
   showGraph(grafo);
-  var a =0;
-  let temp = 10.0;
+  var acum =0;
+  var edgss = 0.0;
+  
   console.log(isConected(grafo));
   var isize = grafo.length;
-  
- grafo0 = grafo;
+  var cont = 0.0
+  grafo0 = grafo;
   var grafo2 = null;
   
-  while(a<2000){
+  for(let i = 0;i<nsteps; i ++){
     let gtemp = proposeGraph(grafo0);  
-    // console.log('l');
-    let prob = probTransition(grafo0, gtemp, temp);
-
-    await pause(50);
+    let prob = probTransition(grafo0, gtemp, temp);   
+    await pause(5);
     clearScreen();
-    //grafo2 = gtemp;
 
     if (acceptance(prob)){
         grafo0 = gtemp;
+        acum = acum + grafo0.nodes[0].edges.length;
+        edgss = edgss + totalEdgs(grafo0);
+        cont += 1;
     }
-
     showGraph(grafo0); 
-
-    //console.log(prob);  
-    //grafo0 = null;
-    //grafo0 = copyGraph(gtemp);
-    //gtemp = null;
-    a++ 
+    
+    i++ 
   }
-  console.log(isConected(grafo));
+  let val = acum/cont;
+  writeData("Expected # of edges in node 0 is: ",val,10);
+  let totalE = edgss/(2*cont); // yo cuento dos veces los enlaces
+  writeData("Expected number of edges: ",totalE,30);
+
   
 }
 
@@ -126,7 +180,32 @@ function pause(time){
 <body>
 <canvas width='600' height='480' id='screen' onclick="drawPoint(event)"></canvas>
 
-<button onclick= "run();">RUN</button>
-</body>
+<label for="tempe">Temperature</label>
+<input type='text' value='10' name='temperatura'onkeyup="setTemp();"/> 
+<label for="step">Steps for MCMC</label>
+<input type='text' value='200' name='steps'onkeyup="setSteps();"/> 
 
+<script>   
+        writeIntro(200);
+        //pause(500);
+        var gMargen = new Graph();
+        let na = new Node(0,0);
+        let nb = new Node(0,480);
+        let nc = new Node(600,0);
+        let nd = new Node(600,480);
+        gMargen.addNode(na);
+        gMargen.addNode(nb);
+        gMargen.addNode(nc);
+        gMargen.addNode(nd);
+    
+        gMargen.addEdge(na,nb);
+        gMargen.addEdge(na,nc);
+        gMargen.addEdge(nc,nd);
+        gMargen.addEdge(nb,nd);
+        showGraph(gMargen,true); </script>
+</body>
+<div class="container">
+        <button onclick="run();" type="button" class="btn btn-primary btn-lg">RUN</button>
+
+      </div>
 </html>
