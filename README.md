@@ -3,10 +3,28 @@
 
 
 
-## Usage
+## Using the program
+
+Click on the screen where you want to localize the node 0 (main node).
+This node will be colored in red to distinguish it form others nodes.
+
+Then continue adding nodes by clicking on the screen
+
+Set up the "temperature" and the number of steps that you want to employ
+to obtain a reasonable structure.
+
+Press "RUN" to see how the method proceeds to propouse a new strucure
 
 
-Example of how to use the graph,  add nodes and Edges.
+## Initial graph
+
+The initial condition for the graph is a complete connected graph, where each node is conncected
+to every other possible node.
+
+
+
+
+The way that a node an
 Node require 2 values (x,y) which is the position on a 2D space.
 Nodes has to be inside the graph BEFORE adding an Edge.
 To add an edge you have to specify 2 nodes.
